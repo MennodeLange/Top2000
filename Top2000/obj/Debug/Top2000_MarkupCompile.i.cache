@@ -4,32 +4,17 @@
 winexe
 C#
 .cs
-<<<<<<< HEAD
-C:\Users\dy0n\Desktop\Tools\Top2000\Top2000\obj\Debug\
-=======
 D:\School\Programmeren\Projecten\Top2000\Top2000\obj\Debug\
->>>>>>> 5d73d5dd3866632113ad9fbea78be2e14bda0a43
 Top2000
 none
 false
 DEBUG;TRACE
-<<<<<<< HEAD
-C:\Users\dy0n\Desktop\Tools\Top2000\Top2000\App.xaml
+D:\School\Programmeren\Projecten\Top2000\Top2000\App.xaml
 61613750588
 
-14-944232004
-13738642453
+14301637765
+14598183689
 Artiest_Bewerken.xaml;Artiest_Toevoegen.xaml;Artiest_Verwijderen.xaml;Help.xaml;Jaar_Toevoegen.xaml;MainWindow.xaml;
 
-False
-=======
-D:\School\Programmeren\Projecten\Top2000\Top2000\App.xaml
-4643398542
-
-12-142994875
-14598183689
-Artiest_Bewerken.xaml;Artiest_Toevoegen.xaml;Artiest_Verwijderen.xaml;MainWindow.xaml;
-
 True
->>>>>>> 5d73d5dd3866632113ad9fbea78be2e14bda0a43
 
