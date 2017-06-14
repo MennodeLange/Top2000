@@ -118,7 +118,7 @@ namespace Top2000
         {
             if (openclosed == "Closed")
             {
-                MenuCon.Height = 150;
+                MenuCon.Height = 190;
                 openclosed = "Open";
             }
             else
@@ -172,6 +172,13 @@ namespace Top2000
         protected void TBSearch_TextChanged(object sender, EventArgs e)
         {
             MessageBox.Show("changed");
+        }
+
+        private void Jaar_Toevoegen_Click(object sender, RoutedEventArgs e)
+        {
+            Jaar_Toevoegen toevoegen = new Jaar_Toevoegen();
+            toevoegen.Show();
+            this.Close();
         }
     }
 }
