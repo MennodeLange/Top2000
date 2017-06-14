@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Data;
@@ -23,7 +24,7 @@ namespace Top2000
     /// </summary>
     public partial class Artiest_Bewerken : Window
     {
-        public SqlConnection Connectie = new SqlConnection(@"Data Source=(localdb)\MSSQLLocaldb;Initial Catalog=TOP2000;Integrated Security=True");
+        public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["TOP2000ConnectionString"].ConnectionString);
 
         public Artiest_Bewerken()
         {

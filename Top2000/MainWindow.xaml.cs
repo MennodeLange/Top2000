@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Data;
@@ -33,9 +35,8 @@ namespace Top2000
         /// <summary>
         /// de database connectie string
         /// </summary>
-        public SqlConnection Connectie = new SqlConnection(@"Data Source=(localdb)\MSSQLLocaldb;Initial Catalog=TOP2000;Integrated Security=True");
-
-
+        public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
+        public int above = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -71,7 +72,6 @@ namespace Top2000
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 CBJaar.Items.Add(dt.Rows[i][0].ToString());
-                                i++;
                             }
                         }
                     }
@@ -128,8 +128,30 @@ namespace Top2000
             }
         }
 
+        public void FillGrid()
+        {
+            SqlConnection con = new SqlConnection();
+            SqlDataAdapter ad = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "GetTop10";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@jaartal", SqlDbType.Int, 50).Value = CBJaar.SelectedValue;
+            cmd.Parameters.Add("@above", SqlDbType.Int, 50).Value = above;
+            ad.SelectCommand = cmd;
+            con.ConnectionString = @"Data Source=(localdb)\MSSQLLocaldb;Initial Catalog=TOP2000;Integrated Security=True";
+            cmd.Connection = con;
+            DataSet ds = new DataSet();
+            ad.Fill(ds);
+            Top10.DataContext = ds.Tables[0].DefaultView;
+            con.Close();
+
+        }
+
         private void CBJaar_changed(object sender, System.EventArgs e)
         {
+            above = 0;
+            FillGrid();
+
             ///haal de data op van het jaar dat gelijk is aan CBJaar.Selectedvalue uit de database
             ///nieuwe stored procedure met als paramater @jaartal waar  CBJaar.Selectedvalue aan word gegeven
 
@@ -179,6 +201,34 @@ namespace Top2000
             Jaar_Toevoegen toevoegen = new Jaar_Toevoegen();
             toevoegen.Show();
             this.Close();
+        }
+
+   
+
+
+        public void BtnEerste_Click(object sender, RoutedEventArgs e)
+        {
+            above = 0;
+            FillGrid();
+        }
+
+        public void BtnVorige_Click(object sender, RoutedEventArgs e)
+        {
+            above = above - 10;
+            FillGrid();
+
+        }
+
+        public void BtnVolgende_Click(object sender, RoutedEventArgs e)
+        {
+            above = above + 10;
+            FillGrid();
+        }
+
+        public void BtnLaatste_Click(object sender, RoutedEventArgs e)
+        {
+            above = 1990;
+            FillGrid();
         }
     }
 }
