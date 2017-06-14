@@ -24,7 +24,11 @@ namespace Top2000
     /// </summary>
     public partial class Artiest_Bewerken : Window
     {
+<<<<<<< HEAD
         public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["TOP2000ConnectionString"].ConnectionString);
+=======
+        public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
+>>>>>>> 3b0115e9e19f5e8b33f4bc8bf9a7d693328cbbee
 
         public Artiest_Bewerken()
         {
