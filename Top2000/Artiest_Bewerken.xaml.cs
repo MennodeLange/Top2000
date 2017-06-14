@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.Data.SqlClient;
+using System.Data.Sql;
+using System.Data;
+
 namespace Top2000
 {
     /// <summary>
@@ -19,9 +23,12 @@ namespace Top2000
     /// </summary>
     public partial class Artiest_Bewerken : Window
     {
+        public SqlConnection Connectie = new SqlConnection(@"Data Source=(localdb)\MSSQLLocaldb;Initial Catalog=TOP2000;Integrated Security=True");
+
         public Artiest_Bewerken()
         {
             InitializeComponent();
+            Loaded();
         }
 
         private void BTNAanpassen_Click(object sender, RoutedEventArgs e)
@@ -34,6 +41,42 @@ namespace Top2000
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
+        }
+
+        public void Loaded()
+        {
+            try
+            {
+                using (Connectie)
+                {
+
+                    Connectie.Open();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "GetAllArtiesten";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = Connectie;
+                    {
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            string x = cmd.ExecuteReader().ToString();
+
+
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                CBArtiestNaam.Items.Add(dt.Rows[i][0].ToString());
+                                i++;
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("kan de gegevens niet ophalen");
+            }
         }
     }
 }

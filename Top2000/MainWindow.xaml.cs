@@ -169,5 +169,9 @@ namespace Top2000
             Bewerken.Show();
             this.Close();
         }
+        protected void TBSearch_TextChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("changed");
+        }
     }
 }

@@ -24,16 +24,21 @@ namespace Top2000
             InitializeComponent();
         }
 
-        private void BTNToevoegen_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void BTNTerug_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
+        }
+
+        private void BTNAanpassen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnUploadFoto_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
