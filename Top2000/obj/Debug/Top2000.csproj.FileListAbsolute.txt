@@ -70,3 +70,5 @@ C:\Users\dy0n\Desktop\top2000\Top2000\obj\Debug\Top2000.Properties.Resources.res
 C:\Users\dy0n\Desktop\top2000\Top2000\obj\Debug\Top2000.csproj.GenerateResource.Cache
 C:\Users\dy0n\Desktop\top2000\Top2000\obj\Debug\Top2000.exe
 C:\Users\dy0n\Desktop\top2000\Top2000\obj\Debug\Top2000.pdb
+C:\Users\dy0n\Desktop\top2000\Top2000\bin\Debug\BusinessLayer.dll
+C:\Users\dy0n\Desktop\top2000\Top2000\bin\Debug\BusinessLayer.pdb

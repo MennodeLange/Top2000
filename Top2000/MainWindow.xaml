@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Top2000" Height="346.96" Width="450" Left="0" Top="0" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,2">
-        <ListView Name="Top10" Margin="0,30,0,40" ItemTemplate="{DynamicResource EmployeeTemplate}" ItemsSource="{Binding Path=Table}">
+        <ListView Name="Top10" Margin="0,30,0,40" ItemsSource="{Binding Path=Table}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="NR" DisplayMemberBinding="{Binding Path=positie}" Width="49"/>
