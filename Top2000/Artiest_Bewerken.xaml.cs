@@ -23,7 +23,7 @@ namespace Top2000
     /// </summary>
     public partial class Artiest_Bewerken : Window
     {
-        public SqlConnection Connectie = new SqlConnection(@"Data Source=(localdb)\MSSQLLocaldb;Initial Catalog=TOP2000;Integrated Security=True");
+        public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
 
         public Artiest_Bewerken()
         {
