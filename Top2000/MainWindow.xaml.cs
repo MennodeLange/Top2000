@@ -20,14 +20,18 @@ using System.Data.Sql;
 using System.Data;
 
 using BusinessLayer;
-
+using DataLayer;
 namespace Top2000
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window 
     {
+        public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
+
+
         public int val = 0;
         /// <summary>
         /// string die word gebruikt voor het menu
@@ -42,7 +46,6 @@ namespace Top2000
             InitializeComponent();
             Loaded();
             TBSearch.TextChanged += new TextChangedEventHandler(TextChanged);
-
         }
 
         /// <summary>
@@ -92,14 +95,15 @@ namespace Top2000
         public void Loaded()
         {
             MyFunction();
-            CBJaar.SelectedIndex = CBJaar.Items.Count - 1;
+            CBJaar.SelectedIndex = 0;
+            Top10.Background = Brushes.Black;
 
         }
-     /// <summary>
-     /// Functie die de groote van de menu container aanpast op click
-     /// </summary>
-     /// <param name="sender"></param>
-     /// <param name="e"></param>
+        /// <summary>
+        /// Functie die de groote van de menu container aanpast op click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void MenuH_Click(object sender, RoutedEventArgs e)
         {
             if (openclosed == "Closed")
@@ -233,21 +237,25 @@ namespace Top2000
             Top10.DataContext = ds.Tables[0].DefaultView;
             Connectie.Close();
         }
+
         public void GetTop10()
         {
+            val = TBSearch.Text.Length;
             SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
-            SqlDataAdapter Conad = new SqlDataAdapter();
+            SqlDataAdapter CONad = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand();
+            cmd.Connection = Connectie;
             cmd.CommandText = "GetTop10";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@jaartal", SqlDbType.Int, 50).Value = CBJaar.SelectedValue;
             cmd.Parameters.Add("@above", SqlDbType.Int, 50).Value = above;
-            Conad.SelectCommand = cmd;
-            cmd.Connection = Connectie;
+            CONad.SelectCommand = cmd;
             DataSet ds = new DataSet();
-            Conad.Fill(ds);
+            CONad.Fill(ds);
             Top10.DataContext = ds.Tables[0].DefaultView;
             Connectie.Close();
         }
+
+      
     }  
 }

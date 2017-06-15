@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Data;
 using BusinessLayer;
+using DataLayer;
 
 namespace Top2000
 {
@@ -36,7 +37,20 @@ namespace Top2000
 
         private void BTNVerwijderen_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
 
+
+
+
+                MessageBox.Show("Artiest verwijderd!");
+            }
+            if (messageBoxResult == MessageBoxResult.No)
+            {
+                MessageBox.Show("Artiest niet verwijderd!");
+
+            }
         }
 
         private void BTNTerug_Click(object sender, RoutedEventArgs e)

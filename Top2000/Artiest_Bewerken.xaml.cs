@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Data;
 using BusinessLayer;
+using DataLayer;
 
 namespace Top2000
 {
@@ -38,6 +39,72 @@ namespace Top2000
         private void BTNAanpassen_Click(object sender, RoutedEventArgs e)
         {
 
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["TOP2000ConnectionString"].ConnectionString);
+                try
+                {
+                    using (Connectie)
+                    {
+
+                        Connectie.Open();
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.CommandText = "UpdateArtiest";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = Connectie;
+                        cmd.Parameters.AddWithValue("@artiest", CBArtiestNaam.SelectedValue);
+
+                        if (TBArtiestNaam.Text.Length == 0)
+                        {
+                            cmd.Parameters.AddWithValue("@naam", CBArtiestNaam.SelectedValue);
+                        }
+                        if (TBArtiestNaam.Text.Length != 0)
+                        {
+                            cmd.Parameters.AddWithValue("@naam", TBArtiestNaam.Text);
+                        }
+                        if (TBArtiestUrl.Text.Length == 0)
+                        {
+                            cmd.Parameters.AddWithValue("@url", DBNull.Value);
+                        }
+                        if (TBArtiestUrl.Text.Length != 0)
+                        {
+                            cmd.Parameters.AddWithValue("@url", TBArtiestUrl.Text);
+                        }
+                        if (TBArtiestBiografie.Text.Length == 0)
+                        {
+                            cmd.Parameters.AddWithValue("@biografie", DBNull.Value);
+                        }
+                        if (TBArtiestBiografie.Text.Length != 0)
+                        {
+                            cmd.Parameters.AddWithValue("@biografie", TBArtiestBiografie.Text);
+                        }
+
+                        {
+
+
+                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("Artiest is succesvol geupdate!");
+                        }
+
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Artiest kon niet worden bijgewerkt");
+                }
+                CBArtiestNaam.SelectedItem = 0;
+                TBArtiestNaam.Text = null;
+                TBArtiestUrl.Text = null;
+                TBArtiestBiografie.Text = null;
+            }
+            if (messageBoxResult == MessageBoxResult.No)
+            {
+                MessageBox.Show("Niet bijgewerkt!");
+            }
+
+
+
         }
 
         private void BTNTerug_Click(object sender, RoutedEventArgs e)
@@ -49,6 +116,7 @@ namespace Top2000
 
         public void Loaded()
         {
+
             try
             {
                 using (Connectie)
@@ -81,6 +149,7 @@ namespace Top2000
             {
                 MessageBox.Show("kan de gegevens niet ophalen");
             }
+            CBArtiestNaam.SelectedIndex = 0;
         }
     }
 }

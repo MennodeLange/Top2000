@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BusinessLayer;
-
+using DataLayer;
+using System.Timers;
 namespace Top2000
 {
     /// <summary>
@@ -27,7 +28,24 @@ namespace Top2000
 
         private void BTNUploaden_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+
+
+
+
+
+
+
+                MessageBox.Show("Jaar Toegevoegd!!");
+            }
+            if (messageBoxResult == MessageBoxResult.No)
+            {
+                MessageBox.Show("Jaar niet Toegevoegd!!");
+            }
         }
 
         private void BTNTerug_Click(object sender, RoutedEventArgs e)
@@ -40,8 +58,7 @@ namespace Top2000
         private void BTNHelp_Click(object sender, RoutedEventArgs e)
         {
             Help newhelp = new Help();
-            newhelp.Show();
-            
+            newhelp.Show();       
         }
 
         private void BtnFileUploaden_Click(object sender, RoutedEventArgs e)

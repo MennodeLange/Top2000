@@ -12,6 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BusinessLayer;
+using DataLayer;
+
+using System.IO;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Top2000
 {
@@ -34,12 +39,23 @@ namespace Top2000
 
         private void BTNAanpassen_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
 
-        }
 
-        private void BtnUploadFoto_Click(object sender, RoutedEventArgs e)
-        {
 
+
+
+
+
+                MessageBox.Show("Artiest Toegevoegd!!");
+            }
+
+            if (messageBoxResult == MessageBoxResult.No)
+            {
+                MessageBox.Show("Artiest niet Toegevoegd!!");
+            }
         }
     }
 }

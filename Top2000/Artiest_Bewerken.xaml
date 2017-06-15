@@ -17,14 +17,10 @@
             <TextBox x:Name="TBArtiestNaam" TextWrapping="Wrap" Width="230" Margin="10,10,0,10" VerticalContentAlignment="Center"/>
         </DockPanel>
         <DockPanel Height="50" LastChildFill="False" Width="442" Margin="0,122,0,197" Background="#FFD1D1D1">
-            <Label Content="Foto" Height="50" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="60" HorizontalContentAlignment="Center"/>
-            <Button x:Name="BtnUploadFoto" Content="Upload" Margin="130,0,0,10" Height="30"  Width="230" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Cursor="Hand"/>
-        </DockPanel>
-        <DockPanel Height="50" LastChildFill="False" Width="442" Margin="0,177,0,142" Background="#FFD1D1D1">
             <Label Content="Url" Height="50" VerticalAlignment="Top" Width="60" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBox x:Name="TBArtiestUrl" TextWrapping="Wrap" Margin="130,0,0,10" Width="230" Height="30" VerticalAlignment="Bottom" VerticalContentAlignment="Center"/>
         </DockPanel>
-        <DockPanel Height="50" LastChildFill="False" Width="442" Margin="0,232,0,87" Background="#FFD1D1D1">
+        <DockPanel Height="50" LastChildFill="False" Width="442" Margin="0,177,0,142" Background="#FFD1D1D1">
             <Label Content="Biografie" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBox x:Name="TBArtiestBiografie" TextWrapping="Wrap" Margin="130,10,0,10" Width="230" VerticalContentAlignment="Center"/>
         </DockPanel>
