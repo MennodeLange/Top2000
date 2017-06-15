@@ -28,7 +28,7 @@ namespace Top2000
     /// </summary>
     public partial class MainWindow : Window 
     {
-
+        public int val = 0;
         /// <summary>
         /// string die word gebruikt voor het menu
         /// </summary>
@@ -36,12 +36,13 @@ namespace Top2000
         /// <summary>
         /// de database connectie string
         /// </summary>
-        public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
         public int above = 0;
         public MainWindow()
         {
             InitializeComponent();
             Loaded();
+            TBSearch.TextChanged += new TextChangedEventHandler(TextChanged);
+
         }
 
         /// <summary>
@@ -49,6 +50,8 @@ namespace Top2000
         /// </summary>
         public void MyFunction()
         {
+        SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
+
             try
             {
                 using (Connectie)
@@ -90,26 +93,8 @@ namespace Top2000
         {
             MyFunction();
             CBJaar.SelectedIndex = CBJaar.Items.Count - 1;
-        }
-        /// <summary>
-        /// Functie die word aangeroepen waneer de search textbox gefocussed is
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void GotFocusE(object sender, RoutedEventArgs e)
-        {
-            TBSearch.Text = "";
-        }
-        /// <summary>
-        /// Functie die word aangeroepen waneer de search textbox niet langer gefocussed is
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void LostFocusE(object sender, RoutedEventArgs e)
-        {
-            TBSearch.Text = "search";
-        }
 
+        }
      /// <summary>
      /// Functie die de groote van de menu container aanpast op click
      /// </summary>
@@ -129,48 +114,14 @@ namespace Top2000
             }
         }
 
-        public void FillGrid()
-        {
-            SqlConnection con = new SqlConnection();
-            SqlDataAdapter ad = new SqlDataAdapter();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "GetTop10";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@jaartal", SqlDbType.Int, 50).Value = CBJaar.SelectedValue;
-            cmd.Parameters.Add("@above", SqlDbType.Int, 50).Value = above;
-            ad.SelectCommand = cmd;
-            con.ConnectionString = @"Data Source=(localdb)\MSSQLLocaldb;Initial Catalog=TOP2000;Integrated Security=True";
-            cmd.Connection = con;
-            DataSet ds = new DataSet();
-            ad.Fill(ds);
-            Top10.DataContext = ds.Tables[0].DefaultView;
-            con.Close();
-
-        }
+   
 
         private void CBJaar_changed(object sender, System.EventArgs e)
         {
             above = 0;
-            FillGrid();
+            GetTop10();
 
-            ///haal de data op van het jaar dat gelijk is aan CBJaar.Selectedvalue uit de database
-            ///nieuwe stored procedure met als paramater @jaartal waar  CBJaar.Selectedvalue aan word gegeven
-
-            using (Connectie)
-            {
-              ///  SqlCommand cmd = new SqlCommand();
-              ///  cmd.CommandText = "procedure die de goede data ophaalt";
-              ///  cmd.CommandType = CommandType.StoredProcedure;
-              ///  cmd.Connection = Connectie;
-
-                {
-                    ///geef het jaartal mee aan de parameter
-                ///    cmd.Parameters.Add("@jaartal", SqlDbType.VarChar).Value = CBJaar.SelectedValue;
-
-                ////    Connectie.Open();
-                ///    cmd.ExecuteNonQuery();
-                }
-            } }
+        }
 
         private void Artiest_Toevoegen_Click(object sender, RoutedEventArgs e)
         {
@@ -191,11 +142,7 @@ namespace Top2000
             Artiest_Bewerken Bewerken = new Artiest_Bewerken();
             Bewerken.Show();
             this.Close();
-        }
-        protected void TBSearch_TextChanged(object sender, EventArgs e)
-        {
-            MessageBox.Show("changed");
-        }
+        }  
 
         private void Jaar_Toevoegen_Click(object sender, RoutedEventArgs e)
         {
@@ -204,32 +151,103 @@ namespace Top2000
             this.Close();
         }
 
-   
-
-
         public void BtnEerste_Click(object sender, RoutedEventArgs e)
         {
             above = 0;
-            FillGrid();
+            GetTop10();
         }
 
         public void BtnVorige_Click(object sender, RoutedEventArgs e)
         {
             above = above - 10;
-            FillGrid();
-
+            GetTop10();
         }
 
         public void BtnVolgende_Click(object sender, RoutedEventArgs e)
         {
             above = above + 10;
-            FillGrid();
+            GetTop10();
         }
 
         public void BtnLaatste_Click(object sender, RoutedEventArgs e)
         {
             above = 1990;
-            FillGrid();
+            GetTop10();
         }
-    }
+
+
+        private void TextChanged(object Sender, TextChangedEventArgs e)
+        {
+            above = 0;
+            if (TBSearch.Text.Length >= 3 && !(TBSearch.Text == "Search"))
+            {
+                GetTop10Search();
+
+            }
+            if (val != 0 && TBSearch.Text.Length < val)
+            {
+                GetTop10Search();
+            }
+            if (TBSearch.Text.Length == 0 && !(TBSearch.Text == "Search") || TBSearch.Text == "Search...")
+            {
+                GetTop10();
+            }
+        }
+
+        /// <summary>
+        /// Functie die word aangeroepen waneer de search textbox gefocussed is
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void GotFocusE(object sender, RoutedEventArgs e)
+        {
+            TBSearch.Text = "";
+        }
+        /// <summary>
+        /// Functie die word aangeroepen waneer de search textbox niet langer gefocussed is
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void LostFocusE(object sender, RoutedEventArgs e)
+        {
+            TBSearch.Text = "Search...";
+        }
+
+
+
+        public void GetTop10Search()
+        {
+            val = TBSearch.Text.Length;
+            SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
+            SqlDataAdapter CONad = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = Connectie;
+            cmd.CommandText = "GetTop10Search";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@jaartal", SqlDbType.Int, 50).Value = CBJaar.SelectedValue;
+            cmd.Parameters.Add("@above", SqlDbType.Int, 50).Value = above;
+            cmd.Parameters.Add("@input", SqlDbType.VarChar, 100).Value = TBSearch.Text;
+            CONad.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            CONad.Fill(ds);
+            Top10.DataContext = ds.Tables[0].DefaultView;
+            Connectie.Close();
+        }
+        public void GetTop10()
+        {
+            SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
+            SqlDataAdapter Conad = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "GetTop10";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@jaartal", SqlDbType.Int, 50).Value = CBJaar.SelectedValue;
+            cmd.Parameters.Add("@above", SqlDbType.Int, 50).Value = above;
+            Conad.SelectCommand = cmd;
+            cmd.Connection = Connectie;
+            DataSet ds = new DataSet();
+            Conad.Fill(ds);
+            Top10.DataContext = ds.Tables[0].DefaultView;
+            Connectie.Close();
+        }
+    }  
 }
