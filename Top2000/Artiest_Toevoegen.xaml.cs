@@ -39,23 +39,39 @@ namespace Top2000
 
         private void BTNAanpassen_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Wilt u deze artiest toevoegen?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+
+            if(TBArtiestNaam.Text.Length == 0 || TBArtiestUrl.Text.Length == 0 || TBArtiestBiografie.Text.Length == 0)
             {
+                MessageBox.Show("Vul eerst alle velden in");
+            }
+            else
+            {
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    Connectie.Open();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "AddArtiest";
+                    cmd.Parameters.AddWithValue("@naam", TBArtiestNaam.Text);
+                    cmd.Parameters.AddWithValue("@url", TBArtiestUrl.Text);
+                    cmd.Parameters.AddWithValue("@biografie", TBArtiestBiografie.Text);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Connection = Connectie;
+                    cmd.ExecuteNonQuery();
+                    Connectie.Close();
+                    MessageBox.Show("Artiest Toegevoegd!");
+                    TBArtiestNaam.Text = "";
+                    TBArtiestUrl.Text = "";
+                    TBArtiestBiografie.Text = "";
+                }
+                if (messageBoxResult == MessageBoxResult.No)
+                {
+                    MessageBox.Show("Artiest niet Toegevoegd!");
 
-
-
-
-
-
-
-                MessageBox.Show("Artiest Toegevoegd!!");
+                }
             }
 
-            if (messageBoxResult == MessageBoxResult.No)
-            {
-                MessageBox.Show("Artiest niet Toegevoegd!!");
-            }
         }
     }
 }
