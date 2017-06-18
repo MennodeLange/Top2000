@@ -30,15 +30,18 @@ namespace Top2000
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Wilt u dit jaar toevoegen?", "Zeker weten?", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
 
+                try
+                {
 
-
-
-
-
+                }
+                catch
+                {
+                    MessageBox.Show("het gokezen bestan is niet geldig (kijk help)");
+                }
 
                 MessageBox.Show("Jaar Toegevoegd!!");
             }

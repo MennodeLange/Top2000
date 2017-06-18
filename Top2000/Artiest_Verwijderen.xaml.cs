@@ -38,24 +38,34 @@ namespace Top2000
         private void BTNVerwijderen_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Wilt u deze artiest echt verwijderen?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Wilt u deze artiest echt verwijderen?", "Zeker weten?", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                Connectie.Open();
-                string artist = CBVerwijderArtiest.SelectedItem.ToString();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "RemoveArtiestZonderLied";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Connection = Connectie;
-                cmd.ExecuteNonQuery();
-                Connectie.Close();
-                MessageBox.Show("Artiest verwijderd!");
-                CBVerwijderArtiest.Items.RemoveAt
-                    (CBVerwijderArtiest.Items.IndexOf(artist));
-                if (CBVerwijderArtiest.Items.Count == 0)
+
+                try
                 {
-                    MessageBox.Show("Geen Artiesten om te verwijderen. \r\n U kunt alleen artiesten verijwderen wanneer ze geen liedjes hebben");
+                    Connectie.Open();
+                    string artist = CBVerwijderArtiest.SelectedItem.ToString();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "RemoveArtiestZonderLied";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = Connectie;
+                    cmd.ExecuteNonQuery();
+                    Connectie.Close();
+                    MessageBox.Show("Artiest verwijderd!");
+                    CBVerwijderArtiest.Items.RemoveAt
+                        (CBVerwijderArtiest.Items.IndexOf(artist));
+                    if (CBVerwijderArtiest.Items.Count == 0)
+                    {
+                        MessageBox.Show("Geen Artiesten om te verwijderen. \r\n U kunt alleen artiesten verijwderen wanneer ze geen liedjes hebben");
+                    }
+                
                 }
+                catch
+                {
+                    MessageBox.Show(" U heeft geen artiest gekozen om te verwijderen");
+                }
+              
             }
             if (messageBoxResult == MessageBoxResult.No)
             {
@@ -80,7 +90,7 @@ namespace Top2000
 
                     Connectie.Open();
                     SqlCommand cmd = new SqlCommand();
-                    cmd.CommandText = "GetAllArtiesten";
+                    cmd.CommandText = "GetArtiestenZonderLied";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = Connectie;
                     {

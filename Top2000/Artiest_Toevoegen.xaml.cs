@@ -40,7 +40,7 @@ namespace Top2000
         private void BTNAanpassen_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Wilt u deze artiest toevoegen?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Wilt u deze artiest toevoegen?", "Zeker weten?", System.Windows.MessageBoxButton.YesNo);
 
             if(TBArtiestNaam.Text.Length == 0 || TBArtiestUrl.Text.Length == 0 || TBArtiestBiografie.Text.Length == 0)
             {
