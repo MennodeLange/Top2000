@@ -182,6 +182,7 @@ namespace Top2000
 
         private void TextChanged(object Sender, TextChangedEventArgs e)
         {
+            //wanneer er een correcte waarde is ingevuld op de tbsearch laat de correcte waardes zien naar aanleiding van de user input.
             above = 0;
             if (TBSearch.Text.Length >= 3 && !(TBSearch.Text == "Search"))
             {
@@ -214,6 +215,7 @@ namespace Top2000
         /// <param name="e"></param>
         public void LostFocusE(object sender, RoutedEventArgs e)
         {
+            
             TBSearch.Text = "Search...";
         }
 
@@ -221,6 +223,7 @@ namespace Top2000
 
         public void GetTop10Search()
         {
+            //Krijg de top10 door de andere resultaten te verbergen via een input van de gebruiker
             val = TBSearch.Text.Length;
             SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
             SqlDataAdapter CONad = new SqlDataAdapter();
@@ -240,6 +243,8 @@ namespace Top2000
 
         public void GetTop10()
         {
+            //krijg de top 10 zonder search
+            
             val = TBSearch.Text.Length;
             SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["Top2000ConnectionString"].ConnectionString);
             SqlDataAdapter CONad = new SqlDataAdapter();

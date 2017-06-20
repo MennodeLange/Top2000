@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data.Sql;
+using System.Data;
+
 
 namespace BusinessLayer
 {
@@ -23,33 +28,39 @@ namespace BusinessLayer
             set { naam = value; }
         }
 
-        private string geboorteDatum;
+        //private string geboorteDatum;
 
-        public string GeboorteDatum
+        //public string GeboorteDatum
+        //{
+        //    get { return geboorteDatum; }
+        //    set { geboorteDatum = value; }
+        //}
+
+       
+        private string url;
+
+        public string Url
         {
-            get { return geboorteDatum; }
-            set { geboorteDatum = value; }
+            get { return url; }
+            set { url = value; }
         }
 
-        private string foto;
-
-        public string Foto
-        {
-            get { return foto; }
-            set { foto = value; }
-        }
         public Artiest()
         {
 
         }
 
-        public Artiest(string _naam, string _geboorteDatum, string _foto, string _bio)
+        public Artiest(string _naam, string _bio, string _Url)
         {
-            this.naam = _naam;
-            this.geboorteDatum = _geboorteDatum;
-            this.foto = _foto;
+            this.naam = _naam; 
             this.bio = _bio;
+            this.Url = _Url;
 
         }
+        public void Aanpassen()
+        {
+
+        }
+
     }
 }

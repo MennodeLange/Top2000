@@ -27,6 +27,8 @@ namespace Top2000
     public partial class Artiest_Bewerken : Window
     {
 
+        Artiest artiest = new Artiest();
+
         public SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["TOP2000ConnectionString"].ConnectionString);
 
 
@@ -34,77 +36,26 @@ namespace Top2000
         {
             InitializeComponent();
             Loaded();
+          
+        }
+        public void Aanpassen()
+        {
+            
+            string ArtiestUrl = TBArtiestUrl.Text;
+            int UrlLengte = TBArtiestUrl.Text.Length;
+            int BioLengte = TBArtiestBiografie.Text.Length;
+            string BioText = TBArtiestBiografie.Text;
+            string ArtiestNaam = TBArtiestNaam.Text;
+
+            Artiest artiest = new Artiest();
+            artiest.Bio = BioText;
+            artiest.Naam = ArtiestNaam;
+            artiest.Url = ArtiestUrl;   
         }
 
         private void BTNAanpassen_Click(object sender, RoutedEventArgs e)
         {
-
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Wilt u de gegevens echt aanpassen?", "Zeker weten?", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                SqlConnection Connectie = new SqlConnection(ConfigurationManager.ConnectionStrings["TOP2000ConnectionString"].ConnectionString);
-                try
-                {
-                    using (Connectie)
-                    {
-
-                        Connectie.Open();
-                        SqlCommand cmd = new SqlCommand();
-                        cmd.CommandText = "UpdateArtiest";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = Connectie;
-                        cmd.Parameters.AddWithValue("@artiest", CBArtiestNaam.SelectedValue);
-
-                        if (TBArtiestNaam.Text.Length == 0)
-                        {
-                            cmd.Parameters.AddWithValue("@naam", CBArtiestNaam.SelectedValue);
-                        }
-                        if (TBArtiestNaam.Text.Length != 0)
-                        {
-                            cmd.Parameters.AddWithValue("@naam", TBArtiestNaam.Text);
-                        }
-                        if (TBArtiestUrl.Text.Length == 0)
-                        {
-                            cmd.Parameters.AddWithValue("@url", DBNull.Value);
-                        }
-                        if (TBArtiestUrl.Text.Length != 0)
-                        {
-                            cmd.Parameters.AddWithValue("@url", TBArtiestUrl.Text);
-                        }
-                        if (TBArtiestBiografie.Text.Length == 0)
-                        {
-                            cmd.Parameters.AddWithValue("@biografie", DBNull.Value);
-                        }
-                        if (TBArtiestBiografie.Text.Length != 0)
-                        {
-                            cmd.Parameters.AddWithValue("@biografie", TBArtiestBiografie.Text);
-                        }
-
-                        {
-
-
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Artiest is succesvol geupdate!");
-                        }
-
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Artiest kon niet worden bijgewerkt");
-                }
-                CBArtiestNaam.SelectedItem = 0;
-                TBArtiestNaam.Text = null;
-                TBArtiestUrl.Text = null;
-                TBArtiestBiografie.Text = null;
-            }
-            if (messageBoxResult == MessageBoxResult.No)
-            {
-                MessageBox.Show("Niet bijgewerkt!");
-            }
-
-
-
+            Aanpassen();
         }
 
         private void BTNTerug_Click(object sender, RoutedEventArgs e)

@@ -44,6 +44,7 @@ namespace Top2000
 
                 try
                 {
+
                     Connectie.Open();
                     string artist = CBVerwijderArtiest.SelectedItem.ToString();
                     SqlCommand cmd = new SqlCommand();
@@ -80,7 +81,7 @@ namespace Top2000
             main.Show();
             this.Close();
         }
-
+        
         public void Loaded()
         {
             try
